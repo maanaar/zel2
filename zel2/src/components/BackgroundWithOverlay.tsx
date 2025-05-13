@@ -22,7 +22,9 @@ const BackgroundWithOverlay = ({children }) => {
             <FaYoutube className="cursor-pointer hover:text-[#ff0000] text-white" size={20} />
           </div>
         </div>
-        <div className="relative z-10 mx-16  pt-6">{children}</div>
+{/*  */}
+        <div className="relative z-10 mx-16  pt-6">{children}</div> 
+
         <div className="relative z-10 flex flex-col justify-center h-full px-16 text-white max-w-3xl">
           <p className="uppercase text-sm tracking-widest mb-2">Crafting Unforgettable Moments</p>
           <h1 className="text-5xl font-bold leading-tight mb-4">

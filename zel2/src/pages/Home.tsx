@@ -11,6 +11,10 @@ const Home = () => {
     // This will navigate to the '/register' route
     navigate('/register');
   };
+  const handleGuest = () => {
+    // This will navigate to the '/register' route
+    navigate('/home');
+  };
 
   return (
     <div className="w-screen h-screen">
@@ -38,13 +42,19 @@ const Home = () => {
           />
 
           <h2 className="text-4xl md:text-6xl lg:text-8xl text-white font-serif font-light">
-            Welcome back
+            Welcome to Ozel Events
           </h2>
           <p
             onClick={handleContractorRequest}  // Handle click to navigate
             className="text-white text-lg md:text-xl font-semibold underline underline-offset-4 cursor-pointer"
           >
             Request to be a contractor →
+          </p>
+          <p
+            onClick={handleGuest}  // Handle click to navigate
+            className="text-white text-lg md:text-xl font-semibold underline underline-offset-4 cursor-pointer"
+          >
+            Browse as a guest →
           </p>
 
           <div className="flex flex-col md:flex-row md:space-x-6 space-y-4 md:space-y-0 mt-4">

@@ -29,7 +29,7 @@ const Footer = () => {
           </ul>
         </div>
 
-        <div>
+        {/* <div>
           <h3 className="font-semibold mb-4">Usefull Links</h3>
           <ul className="space-y-2 text-sm">
             <li><a href="#disclaimer" className="hover:underline flex items-center gap-2"><IoIosArrowForward /> Disclaimer</a></li>
@@ -38,7 +38,7 @@ const Footer = () => {
             <li><a href="#refund" className="hover:underline flex items-center gap-2"><IoIosArrowForward /> Refund Guarantee</a></li>
             <li><a href="#payment" className="hover:underline flex items-center gap-2"><IoIosArrowForward /> Payment Method</a></li>
           </ul>
-        </div>
+        </div> */}
 
         <div>
           <h3 className="font-semibold mb-4">Follow Us On Social Media</h3>

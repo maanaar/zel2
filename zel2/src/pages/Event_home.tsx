@@ -1,4 +1,5 @@
 import BackgroundWithOverlay from "../components/BackgroundWithOverlay";
+import ExperienceSection from "../components/ExperienceSection";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import ServiceCards from "../components/ServiceCards";
@@ -12,6 +13,7 @@ return(
                     <Navbar/>
                 </BackgroundWithOverlay>
                 <ServiceCards/>
+                <ExperienceSection/>
                 <Footer/>
             
             </div>
