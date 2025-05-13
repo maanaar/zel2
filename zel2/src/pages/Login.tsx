@@ -1,10 +1,42 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import zel from '../../src/assets/logo.png';
 import bg from '../../src/assets/bg.jpeg';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
   const [role, setRole] = useState('User'); // Default role
+  const [users, setUsers] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const Navigate = useNavigate();
+  
+  const staticEmail = 'test@example.com';
+  const staticPassword = '123456';
+
+  const handleLogin = async () =>{
+    if(email===staticEmail && password===staticPassword){
+      alert('Login successful1');
+      Navigate('/home');
+    }else {try{
+      const response =await axios.post('https://api.example.com/login', {
+        email,
+        password,
+        role
+      });
+      if(response.data.success){
+        alert('Login successful1');
+      }else{
+        alert('Invalid credintials.');
+      }
+    }
+    catch(err){
+      alert('Error during login.')
+    }}
+  };
 
   return (
     <div
@@ -76,14 +108,16 @@ const Login = () => {
           </div>
 
           {/* Login Button */}
-          <button className="w-full bg-[#222359] text-white py-2 rounded-md text-lg hover:opacity-90 transition">
+          <button 
+            onClick={handleLogin}
+            className="w-full bg-[#222359] text-white py-2 rounded-md text-lg hover:opacity-90 transition">
             Login
           </button>
 
           {/* Sign Up Link */}
           <p className="text-sm text-center">
             Don&apos;t have an account?{" "}
-            <a href="#" className="font-semibold text-[#1C1C3F] hover:underline">
+            <a href="/signup" className="font-semibold text-[#1C1C3F] hover:underline">
               Sign up
             </a>
           </p>
