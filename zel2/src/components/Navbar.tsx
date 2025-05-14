@@ -1,6 +1,6 @@
 import React from 'react';
 import zel from '../../src/assets/logo.png';
-import menu from '../../src/assets/icon.png'
+import menu from '../../src/assets/icon.png';
 
 const Navbar = () => {
   return (
