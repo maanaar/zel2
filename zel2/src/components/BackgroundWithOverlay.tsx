@@ -17,11 +17,27 @@ const BackgroundWithOverlay = ({children }) => {
         <p className="text-5xl font-bold leading-tight mb-4">Explore our exclusive range of event services designed to make your moments unforgettable.</p>
       </>
     );
+
   } else if (location.pathname === '/about') {
     content = (
       <>
         <p className="uppercase text-sm tracking-widest mb-2">About Us</p>
         <p className="text-5xl font-bold leading-tight mb-4">Learn more about our journey and commitment</p>
+      </>
+    );
+  }
+  else if (location.pathname === '/create') {
+    content = (
+      <>
+        <p className="uppercase text-sm tracking-widest mb-2">CREATE AN EVENT</p>
+        <p className="text-5xl font-bold leading-tight mb-4">Lets Create Your Next Event</p>
+      </>
+    );
+  }else if (location.pathname === '/myevents') {
+    content = (
+      <>
+        <p className="uppercase text-sm tracking-widest mb-2">OUR EVENTS</p>
+        <p className="text-5xl font-bold leading-tight mb-4">Tracking My Events</p>
       </>
     );
   } else {

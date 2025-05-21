@@ -6,17 +6,17 @@ const EventServices: React.FC = () => {
     {
       title: 'Venue',
       description: 'Choose your ideal venue with enchantment and function.',
-      img: '/path/to/venue.jpg',
+      img: '../../src/assets/venue.jpeg',
     },
     {
       title: 'Event Catering And Culinary Services',
       description: 'Delight every event with exceptional culinary excellence.',
-      img: '/path/to/catering.jpg',
+      img: '../../src/assets/catering.jpeg',
     },
     {
       title: 'Event Marketing And Promotion',
       description: 'Boost awareness of your event with professional marketing strategies.',
-      img: '/path/to/marketing.jpg',
+      img: '../../src/assets/marketing.jpeg',
     },
   ];
 

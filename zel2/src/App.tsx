@@ -7,6 +7,9 @@ import SignUp from './pages/Signup';
 import PaymentForm from './pages/PaymentForm';
 import Event_home from './pages/Event_home';
 import AboutUs from './pages/AboutUs';
+import CreateEvent from './pages/CreateEvent';
+import EventTracking from './pages/EventTracking';
+import Partners_services from './pages/partners_services';
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
         <Route path="/payment" element={<PaymentForm />} />
         <Route path='/home' element={<Event_home/>}/>
         <Route path='/about' element={<AboutUs/>}/>
+        <Route path='/create' element={<CreateEvent/>}/>
+        <Route path='/myevents' element={<EventTracking/>}/>
+        <Route path='/services' element={<Partners_services/>}/>
 
       </Routes>
     </Router>
