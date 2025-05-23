@@ -1,6 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-// Define types for our event tracking data
 type ServiceStatus = 'In Progress' | 'Not Ready' | 'Done';
 
 type Service = {
@@ -17,7 +16,6 @@ type Event = {
 };
 
 export default function EventTrackingInterface() {
-  // Initial event data based on the image
   const [events, setEvents] = useState<Event[]>([
     {
       id: 1,
@@ -43,14 +41,38 @@ export default function EventTrackingInterface() {
         { name: "Venue", status: "Done" },
       ],
       completed: false,
-    }
+    },
   ]);
 
-  // Function to get status color
+  useEffect(() => {
+    async function fetchEvents() {
+      try {
+        const response = await fetch('/api/events'); // Replace with your actual API URL
+        const userEvents: Event[] = await response.json();
+
+        // Combine static events with user events
+        setEvents((prev) => {
+          // You can customize merge logic. Here we just append new events:
+          const merged = [...prev];
+
+          userEvents.forEach((userEvent) => {
+            const exists = prev.some((e) => e.id === userEvent.id);
+            if (!exists) merged.push(userEvent);
+          });
+
+          return merged;
+        });
+      } catch (error) {
+        console.error('Error fetching events:', error);
+      }
+    }
+
+    fetchEvents();
+  }, []);
+
   const getStatusColor = (status: ServiceStatus) => {
     switch (status) {
       case 'In Progress':
-        return 'text-red-500';
       case 'Not Ready':
         return 'text-red-500';
       case 'Done':
@@ -61,14 +83,12 @@ export default function EventTrackingInterface() {
   };
 
   return (
-    <div className="flex flex-col space-y-8 w-full w-full px-16 my-8 mx-auto">
+    <div className="flex flex-col space-y-8 w-full px-16 my-8 mx-auto">
       {events.map((event) => (
         <div key={event.id} className="overflow-hidden shadow-md">
-          {/* Header - now more separated with extra rounded corners */}
           <div className="bg-purple-900 text-white text-center py-4 rounded-2xl font-medium text-lg mb-3">
             {event.title}
           </div>
-          
           <div className="bg-white p-6 rounded-2xl border border-gray-200">
             {/* Step 1 */}
             <div className="flex items-start space-x-5 mb-4">
@@ -83,7 +103,6 @@ export default function EventTrackingInterface() {
                 <p className="text-gray-700 ml-4 mt-2">your event has been successfully sent.</p>
               </div>
             </div>
-            
             {/* Step 2 */}
             <div className="flex items-start space-x-5 mb-4">
               <div className="flex flex-col items-center">
@@ -106,7 +125,6 @@ export default function EventTrackingInterface() {
                 </div>
               </div>
             </div>
-            
             {/* Step 3 */}
             <div className="flex items-start space-x-5">
               <div className="flex flex-col items-center">

@@ -9,7 +9,8 @@ import Event_home from './pages/Event_home';
 import AboutUs from './pages/AboutUs';
 import CreateEvent from './pages/CreateEvent';
 import EventTracking from './pages/EventTracking';
-import Partners_services from './pages/partners_services';
+import Partners_services from './pages/Partners_Services';
+import ContactUs from './pages/ContactUs';
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
         <Route path='/create' element={<CreateEvent/>}/>
         <Route path='/myevents' element={<EventTracking/>}/>
         <Route path='/services' element={<Partners_services/>}/>
-
+        <Route path='/contact' element={<ContactUs/>}/>
       </Routes>
     </Router>
   );

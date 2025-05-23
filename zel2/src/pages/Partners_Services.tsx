@@ -1,5 +1,4 @@
 import BackgroundWithOverlay from "../components/BackgroundWithOverlay";
-import EventForm from "../components/EventForm";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Services from "../components/Services";
