@@ -27,6 +27,7 @@ function App() {
         <Route path='/myevents' element={<EventTracking/>}/>
         <Route path='/services' element={<Partners_services/>}/>
         <Route path='/contact' element={<ContactUs/>}/>
+        <Route path='/ourprojects' element={<ContactUs/>}/>
       </Routes>
     </Router>
   );

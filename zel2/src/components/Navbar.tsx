@@ -55,7 +55,7 @@ const Navbar = () => {
         </div>
 
         <div className="links flex md:gap-6 sm:gap-2">
-          {['home', 'services', 'gallery', 'about', 'contact', 'myevents'].map((tab) => (
+          {['home', 'services', 'ourprojects', 'about', 'contact', 'myevents'].map((tab) => (
             <button
               key={tab}
               onClick={() => handleTabClick(tab)}
