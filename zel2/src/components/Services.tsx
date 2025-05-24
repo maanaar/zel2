@@ -149,9 +149,9 @@ export default function Services() {
   <div className="bg-gray-50 p-4 w-full max-w-6xl mx-auto">
     {selectedService ? (
       <div>
-        <div className="mb-4 flex justify-between items-center">
-          
-          <button onClick={() => setSelectedService(null)}>
+        <div className="mb-4 flex justify-end items-center">
+          <div className='flex flex-row justify-end'>
+          <button className='mx-64' onClick={() => setSelectedService(null)}>
             ← Back to Services
           </button>
           <div className="flex items-center gap-2">
@@ -168,6 +168,7 @@ export default function Services() {
                 <option key={service.id} value={service.name}>{service.name}</option>
               ))}
             </select>
+          </div>
           </div>
         </div>
 
