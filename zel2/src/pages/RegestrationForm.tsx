@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import zel from '../../src/assets/logo.png';
 import bg from '../../src/assets/bg.jpeg';
+import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+
 
 interface FormData {
   organizationName: string;
@@ -38,58 +41,87 @@ const RegistrationForm = () => {
   const categories = ["Category 1", "Category 2", "Category 3"];
   const capacityRanges = ["200-500", "500-1000", "1000-5000", "5000-10000"];
 
+  const navigate =useNavigate();
   const validatePhoneNumber = (phone: string) => /^[0-9]{10}$/.test(phone);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const {
-      organizationName,
-      email,
-      phoneNumber,
-      tin,
-      category,
-      location,
-      
-      healthCertificate,
-    } = formData;
+  const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const {
+    organizationName,
+    email,
+    phoneNumber,
+    tin,
+    category,
+    location,
+    healthCertificate,
+  } = formData;
 
-    if (
-      !organizationName ||
-      !email ||
-      !phoneNumber ||
-      !tin ||
-      !category ||
-      !location ||
-      !healthCertificate
-    ) {
-      alert("Please fill in all fields and upload a health certificate.");
-      return;
-    }
+  if (
+    !organizationName ||
+    !email ||
+    !phoneNumber ||
+    !tin ||
+    !category ||
+    !location ||
+    !healthCertificate
+  ) {
+    alert("Please fill in all fields and upload a health certificate.");
+    return;
+  }
 
-    if (!validatePhoneNumber(phoneNumber)) {
-      alert('Please enter a valid phone number.');
-      return;
-    }
+  if (!validatePhoneNumber(phoneNumber)) {
+    alert('Please enter a valid phone number.');
+    return;
+  }
 
-    if (pricingByCapacity.some(p => !p.capacityRange)) {
-      alert("Please complete all pricing by capacity fields.");
-      return;
-    }
+  if (pricingByCapacity.some(p => !p.capacityRange || !p.price)) {
+    alert("Please complete all pricing by capacity fields.");
+    return;
+  }
 
-    console.log('Form submitted:', { ...formData, pricingByCapacity });
-
-    setFormData({
-      organizationName: '',
-      email: '',
-      phoneNumber: '',
-      tin: '',
-      category: '',
-      location: '',
-      priceRange: '',
-      healthCertificate: null,
-    });
-    setPricingByCapacity([{ capacityRange: '', price: '' }]);
+  const payload = {
+    ...formData,
+    pricingByCapacity,
   };
+
+  try {
+    const response = await fetch('https://your-backend.com/api/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    });
+
+    if (!response.ok) throw new Error('Failed to submit form');
+
+    const result = await response.json();
+    alert('Form submitted successfully!');
+    console.log('Server response:', result);
+  } catch (error) {
+    console.warn("API unavailable. Saving locally instead...");
+    // Save to localStorage if API fails
+    const existing = localStorage.getItem('pendingRegistrations');
+    const stored = existing ? JSON.parse(existing) : [];
+    stored.push(payload);
+    localStorage.setItem('pendingRegistrations', JSON.stringify(stored));
+    alert('Saved locally. Will try again when online or with API.');
+  }
+
+  // Reset form
+  setFormData({
+    organizationName: '',
+    email: '',
+    phoneNumber: '',
+    tin: '',
+    category: '',
+    location: '',
+    priceRange: '',
+    healthCertificate: null,
+  });
+  setPricingByCapacity([{ capacityRange: '', price: '' }]);
+};
+
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -122,9 +154,16 @@ const RegistrationForm = () => {
           backgroundPosition: "center",
         }}
       >
+        
         <div className="bg-white rounded-2xl shadow-lg p-10 w-full max-w-4xl flex  relative mx-4 my-2">
-          <div className="text-center mb-6">
-            <h1 className="text-3xl font-bold text-purple-900">Registration Form</h1>
+          
+        <div className="text-center mb-6">
+          <div className='flex flex-row'>
+            <button type="button" className='text-navy-900 mt-1' onClick={() => navigate('/')}>
+            <ArrowLeft className="mr-2" /> 
+          </button>
+              <h1 className="text-3xl font-bold text-purple-900">Registration Form</h1>
+            </div>
             <img src={zel} alt="Zel Logo" className="w-128 mx-auto mt-4" />
           </div>
 

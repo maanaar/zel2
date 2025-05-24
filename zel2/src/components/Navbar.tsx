@@ -50,9 +50,9 @@ const Navbar = () => {
   return (
     <div className="bg-white rounded-2xl">
       <div className="container mx-auto flex flex-row justify-between items-center">
-        <div className="flex items-center sm:gap-2">
-          <img src={zel} alt="zel" className="w-16 h-16 py-1" />
-        </div>
+        <button className="flex items-center sm:gap-2" onClick={() => navigate('/')}>
+          <img src={zel}  alt="zel" className="w-16 h-16 py-1" />
+        </button>
 
         <div className="links flex md:gap-6 sm:gap-2">
           {['home', 'services', 'ourprojects', 'about', 'contact', 'myevents'].map((tab) => (
@@ -79,7 +79,7 @@ const Navbar = () => {
             </button>
           ) : (
             <Link to="/login">
-              <button className="text-sm bg-blue-500 text-white px-4 py-1 rounded-full">
+              <button className="text-sm  bg-gradient-to-br from-[#030C37] to-[#588AB0] text-white px-4 py-1 rounded-full">
                 Login
               </button>
             </Link>

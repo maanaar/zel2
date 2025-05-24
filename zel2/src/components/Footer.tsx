@@ -4,7 +4,7 @@ import zel from '../../src/assets/logo.png';
 
 const Footer = () => {
   return (
-    <footer className="bg-[#0b1e39] text-white py-10 px-8">
+    <footer className="bg-[#0b1e39] text-white py-10 px-8" style={{ backgroundImage: "url('../../src/assets/footer.png')" }}>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 px-5 md:px-0">
         
         <div>

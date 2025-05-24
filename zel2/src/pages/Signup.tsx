@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import zel from '../../src/assets/logo.png';
 import bg from '../../src/assets/bg.jpeg';
+import { ArrowLeft } from 'lucide-react';
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState('');
@@ -52,6 +53,9 @@ const SignUp = () => {
       <div className="absolute inset-0 bg-[#1C1C3F]/45 z-0"></div>
 
       <div className="relative z-10 w-full md:w-3/5 flex items-center justify-center p-6">
+      <button type="button" className='text-white mx-auto' onClick={() => navigate('/')}>
+           <ArrowLeft className="mr-2" /> Back to Home
+        </button>
         <div className="bg-white rounded-[32px] p-12 w-full max-w-lg shadow-lg space-y-6">
           <div className="flex space-x-4">
             <div className="w-full">
