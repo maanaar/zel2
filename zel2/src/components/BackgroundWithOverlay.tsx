@@ -1,4 +1,4 @@
-import { useLocation } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import bg from '../../src/assets/bg.jpeg';
 import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 
@@ -6,7 +6,7 @@ import { FaFacebookF, FaInstagram, FaYoutube } from 'react-icons/fa';
 const BackgroundWithOverlay = ({children }) => {
   
   const location = useLocation(); // Get current route
-
+  const navigate = useNavigate();
   // Conditionally render different content based on route
   let content;
 
@@ -25,12 +25,29 @@ const BackgroundWithOverlay = ({children }) => {
         <p className="text-5xl font-bold leading-tight mb-4">Learn more about our journey and commitment</p>
       </>
     );
+  } else if (location.pathname === '/ourprojects') {
+    content = (
+      <>
+        <p className="uppercase text-sm tracking-widest mb-2">Our Projects</p>
+        <p className="text-5xl font-bold leading-tight mb-4">Crafting Memorable Experiences with
+us</p>
+      </>
+    );
   }
   else if (location.pathname === '/create') {
     content = (
       <>
         <p className="uppercase text-sm tracking-widest mb-2">CREATE AN EVENT</p>
         <p className="text-5xl font-bold leading-tight mb-4">Lets Create Your Next Event</p>
+      </>
+    );
+  }
+  else if (location.pathname === '/contact') {
+    content = (
+      <>
+        <p className="uppercase text-sm tracking-widest mb-2">Contact Us</p>
+        <p className="text-5xl font-bold leading-tight mb-4">Reach out to our team & Lets Get In
+Touch With Us</p>
       </>
     );
   }else if (location.pathname === '/myevents') {
@@ -50,10 +67,10 @@ const BackgroundWithOverlay = ({children }) => {
           product launches, we ensure every detail is flawless, creating extraordinary experiences tailored to your needs.
         </p>
         <div className="flex space-x-4">
-          <button className="bg-gradient-to-tr from-[#030C37] to-[#588AB0] text-white font-semibold py-2 px-6 rounded-full">
+          <button className="bg-gradient-to-tr from-[#030C37] to-[#588AB0] text-white font-semibold py-2 px-6 rounded-full" onClick={()=>navigate('/services')}>
             Our Services
           </button>
-          <button className="bg-white hover:bg-gray-200 text-black font-semibold py-2 px-6 rounded-full">
+          <button className="bg-white hover:bg-gray-200 text-black font-semibold py-2 px-6 rounded-full" onClick={()=>navigate('/Ourprojects')}>
             See Projects
           </button>
         </div>

@@ -13,6 +13,7 @@ import Partners_services from './pages/Partners_Services';
 import ContactUs from './pages/ContactUs';
 import Ourprojects from './pages/Ourprojects';
 import { useEffect, useState } from 'react';
+import Dashboard from './pages/Dashboard';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -64,6 +65,7 @@ function App() {
         <Route path='/services' element={<Partners_services/>}/>
         <Route path='/contact' element={<ContactUs/>}/>
         <Route path='/ourprojects' element={<Ourprojects/>}/>
+        <Route path='/dashboard' element={<Dashboard/>}/>
       </Routes>
     </Router>
   );

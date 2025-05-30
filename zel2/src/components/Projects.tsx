@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const categories = [
   {
@@ -34,6 +35,7 @@ const categories = [
 ];
 
 const PortfolioShowcase: React.FC = () => {
+  const navigate =useNavigate();
   return (
     <div className="bg-white text-gray-800">
       {/* Top Section */}
@@ -64,7 +66,7 @@ const PortfolioShowcase: React.FC = () => {
             <li>Explore stunning designs & immersive event settings.</li>
             <li>See the art of crafting experiences that captivate guests.</li>
           </ul>
-          <button className=" bg-gradient-to-br from-[#030C37] to-[#588AB0] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition">
+          <button className=" bg-gradient-to-br from-[#030C37] to-[#588AB0] text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition" onClick={()=> navigate('/about')}>
             More About Us
           </button>
         </div>

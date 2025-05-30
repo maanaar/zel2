@@ -55,7 +55,7 @@ const Navbar = () => {
         </button>
 
         <div className="links flex md:gap-6 sm:gap-2">
-          {['home', 'services', 'ourprojects', 'about', 'contact', 'myevents'].map((tab) => (
+          {['home', 'services', 'ourprojects', 'about', 'contact', 'myevents','dashboard'].map((tab) => (
             <button
               key={tab}
               onClick={() => handleTabClick(tab)}
@@ -85,7 +85,7 @@ const Navbar = () => {
             </Link>
           )}
 
-          <img src={menu} alt="menu" className="px-4" />
+          
         </div>
       </div>
     </div>

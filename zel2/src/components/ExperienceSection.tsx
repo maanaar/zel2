@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import experienceImg1 from '../../src/assets/experience1.png'; // Replace with your actual images
 import experienceImg2 from '../../src/assets/experience2.png';
 
 const ExperienceSection = () => {
+  const navigate =useNavigate();
   return (
     // <div className="w-full grid md:grid-cols-2 ">
       <div className='flex felx-row items-center px-32 py-12  space-x-32'>
@@ -22,7 +24,7 @@ const ExperienceSection = () => {
             </p>
             <img src={experienceImg2} alt="Speaker on stage" className="rounded-2xl w-full" />
         </div>
-        <button className="bg-[#0D0D44] text-white py-2 px-5 mt-8 rounded-full hover:bg-blue-800">
+        <button className="bg-[#0D0D44] text-white py-2 px-5 mt-8 rounded-full hover:bg-blue-800" onClick={()=> navigate('/about')}>
           More About Us
         </button>
       </div>
