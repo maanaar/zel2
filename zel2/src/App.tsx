@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import RegistrationForm from './pages/RegestrationForm';
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -65,7 +65,12 @@ function App() {
         <Route path='/services' element={<Partners_services/>}/>
         <Route path='/contact' element={<ContactUs/>}/>
         <Route path='/ourprojects' element={<Ourprojects/>}/>
-        <Route path='/dashboard' element={<Dashboard/>}/>
+        <Route
+          path="/dashboard"
+          element={
+            localStorage.getItem('role') === 'Admin' ? <Dashboard /> : <Navigate to="/" />
+          }
+        />
       </Routes>
     </Router>
   );

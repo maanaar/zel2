@@ -16,37 +16,39 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
   const staticEmail = 'test@example.com';
   const staticPassword = '123456';
 
-  // Sync with props
   useEffect(() => {
     setIsLoggedIn(propIsLoggedIn || false);
     setUserEmail(propUserEmail || null);
   }, [propIsLoggedIn, propUserEmail]);
 
-  // Check if user is already logged in on component mount
   useEffect(() => {
     const token = localStorage.getItem('token');
     const storedEmail = localStorage.getItem('userEmail');
-    
+
     if (token && storedEmail && !isLoggedIn) {
-      // Immediately logout instead of showing logged in state
       handleLogout();
     }
   }, [onLoginStatusChange, isLoggedIn]);
 
-  // Function to handle successful login
   const handleSuccessfulLogin = (token, loginEmail) => {
     localStorage.setItem('token', token);
     localStorage.setItem('userEmail', loginEmail);
+    localStorage.setItem('role', role); // Store role for later use
     setIsLoggedIn(true);
     setUserEmail(loginEmail);
-    
-    // Notify parent component about login status change
+
     if (onLoginStatusChange) {
       onLoginStatusChange(true, loginEmail);
     }
-    
+
     alert('Login successful!');
-    navigate('/home');
+
+    // Redirect based on role
+    if (role === 'Admin') {
+      navigate('/dashboard');
+    } else {
+      navigate('/home');
+    }
   };
 
   const handleLogin = async () => {
@@ -76,18 +78,17 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
     }
   };
 
-  // Function to handle logout
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('userEmail');
+    localStorage.removeItem('role');
     setIsLoggedIn(false);
     setUserEmail(null);
-    
-    // Notify parent component about login status change
+
     if (onLoginStatusChange) {
       onLoginStatusChange(false, null);
     }
-    
+
     navigate('/');
   };
 
@@ -105,15 +106,14 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
         backgroundPosition: "center",
       }}
     >
-      
       <div className="absolute inset-0 bg-[#1C1C3F]/45 z-0"></div>
-        
+
       {/* Form Section */}
       <div className="relative z-10 w-full md:w-3/5 flex items-center justify-center p-6">
         <button type="button" className='text-white mx-auto' onClick={() => navigate('/')}>
           <ArrowLeft className="mr-2" /> Back to Home
         </button>
-        
+
         <div className="bg-white rounded-[32px] p-12 w-full max-w-lg shadow-lg space-y-6">
           <div className="flex w-full bg-gray-200 rounded-full text-sm font-medium overflow-hidden">
             {['Contractor', 'User', 'Admin'].map((r) => (
@@ -140,7 +140,6 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
               type={role === 'Contractor' ? 'text' : 'email'}
               placeholder={role === 'Contractor' ? 'Username' : 'E-mail'}
               className="w-full border border-gray-400 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1C1C3F]"
-              disabled={false}
             />
           </div>
 
@@ -153,13 +152,12 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
               type="password"
               placeholder="Password"
               className="w-full border border-gray-400 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1C1C3F]"
-              disabled={false}
             />
           </div>
 
           <div className="flex items-center justify-between text-sm text-gray-600">
             <label className="flex items-center gap-2">
-              <input type="checkbox" className="accent-[#1C1C3F]" disabled={false} />
+              <input type="checkbox" className="accent-[#1C1C3F]" />
               Remember Me
             </label>
             <a href="#" className="hover:underline">Forgot password?</a>
@@ -167,7 +165,6 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
 
           <button
             onClick={handleLogin}
-            disabled={false}
             className="w-full bg-[#222359] text-white py-2 rounded-md text-lg hover:opacity-90 transition"
           >
             Login
@@ -179,8 +176,6 @@ const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: pro
               Sign up
             </a>
           </p>
-
-          
         </div>
       </div>
 

@@ -40,7 +40,7 @@ const Navbar = () => {
   } else {
     createButtonContent = (
       <Link to="/create">
-        <button className="px-6 py-2 md:text-lg sm:text-xs bg-gradient-to-br from-[#030C37] to-[#588AB0] text-white rounded-full transition">
+        <button className="text-sm  bg-gradient-to-br from-[#030C37] to-[#588AB0] text-white px-4 py-1 rounded-full">
           Create an event
         </button>
       </Link>
@@ -55,7 +55,7 @@ const Navbar = () => {
         </button>
 
         <div className="links flex md:gap-6 sm:gap-2">
-          {['home', 'services', 'ourprojects', 'about', 'contact', 'myevents','dashboard'].map((tab) => (
+          {['home', 'services', 'ourprojects', 'about', 'contact', 'myevents'].map((tab) => (
             <button
               key={tab}
               onClick={() => handleTabClick(tab)}
