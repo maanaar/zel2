@@ -1,41 +1,95 @@
-import React, {  useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import zel from '../../src/assets/logo.png';
 import bg from '../../src/assets/bg.jpeg';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ArrowLeft } from 'lucide-react';
 
-
-const Login = () => {
-  const [role, setRole] = useState('User'); // Default role
-  const [users, setUsers] = useState();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+const Login = ({ onLoginStatusChange, isLoggedIn: propIsLoggedIn, userEmail: propUserEmail }) => {
+  const [role, setRole] = useState('User');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const Navigate = useNavigate();
-  
+  const [isLoggedIn, setIsLoggedIn] = useState(propIsLoggedIn || false);
+  const [userEmail, setUserEmail] = useState(propUserEmail || null);
+  const navigate = useNavigate();
+
   const staticEmail = 'test@example.com';
   const staticPassword = '123456';
 
-  const handleLogin = async () =>{
-    if(email===staticEmail && password===staticPassword){
-      alert('Login successful1');
-      Navigate('/home');
-    }else {try{
-      const response =await axios.post('https://api.example.com/login', {
+  useEffect(() => {
+    setIsLoggedIn(propIsLoggedIn || false);
+    setUserEmail(propUserEmail || null);
+  }, [propIsLoggedIn, propUserEmail]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const storedEmail = localStorage.getItem('userEmail');
+
+    if (token && storedEmail && !isLoggedIn) {
+      handleLogout();
+    }
+  }, [onLoginStatusChange, isLoggedIn]);
+
+  const handleSuccessfulLogin = (token, loginEmail) => {
+    localStorage.setItem('token', token);
+    localStorage.setItem('userEmail', loginEmail);
+    localStorage.setItem('role', role); // Store role for later use
+    setIsLoggedIn(true);
+    setUserEmail(loginEmail);
+
+    if (onLoginStatusChange) {
+      onLoginStatusChange(true, loginEmail);
+    }
+
+    alert('Login successful!');
+
+    // Redirect based on role
+    if (role === 'Admin') {
+      navigate('/dashboard');
+    } else {
+      navigate('/home');
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      // Static check
+      if (email === staticEmail && password === staticPassword) {
+        handleSuccessfulLogin('demo-static-token', email);
+        return;
+      }
+
+      // API request
+      const response = await axios.post('https://api.example.com/login', {
         email,
         password,
         role
       });
-      if(response.data.success){
-        alert('Login successful1');
-      }else{
-        alert('Invalid credintials.');
+
+      if (response.data.success) {
+        const token = response.data.token || 'demo-token';
+        const loginEmail = response.data.email || email;
+        handleSuccessfulLogin(token, loginEmail);
+      } else {
+        alert('Invalid credentials.');
       }
+    } catch (err) {
+      alert('Error during login.');
     }
-    catch(err){
-      alert('Error during login.')
-    }}
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('userEmail');
+    localStorage.removeItem('role');
+    setIsLoggedIn(false);
+    setUserEmail(null);
+
+    if (onLoginStatusChange) {
+      onLoginStatusChange(false, null);
+    }
+
+    navigate('/');
   };
 
   return (
@@ -50,16 +104,17 @@ const Login = () => {
         backgroundSize: "cover",
         backgroundRepeat: "no-repeat",
         backgroundPosition: "center",
-        
       }}
     >
-      {/* Overlay */}
       <div className="absolute inset-0 bg-[#1C1C3F]/45 z-0"></div>
+
       {/* Form Section */}
       <div className="relative z-10 w-full md:w-3/5 flex items-center justify-center p-6">
-      <div className="bg-white rounded-[32px] p-12 w-full max-w-lg shadow-lg space-y-6">
-          
-          {/* Tabs */}
+        <button type="button" className='text-white mx-auto' onClick={() => navigate('/')}>
+          <ArrowLeft className="mr-2" /> Back to Home
+        </button>
+
+        <div className="bg-white rounded-[32px] p-12 w-full max-w-lg shadow-lg space-y-6">
           <div className="flex w-full bg-gray-200 rounded-full text-sm font-medium overflow-hidden">
             {['Contractor', 'User', 'Admin'].map((r) => (
               <button
@@ -74,12 +129,14 @@ const Login = () => {
             ))}
           </div>
 
-          {/* Email or Username Field */}
+          {/* Email Field */}
           <div>
             <label className="block font-semibold mb-1">
               {role === 'Contractor' ? 'Username' : 'Email'}
             </label>
             <input
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               type={role === 'Contractor' ? 'text' : 'email'}
               placeholder={role === 'Contractor' ? 'Username' : 'E-mail'}
               className="w-full border border-gray-400 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1C1C3F]"
@@ -90,33 +147,31 @@ const Login = () => {
           <div>
             <label className="block font-semibold mb-1">Password</label>
             <input
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               type="password"
               placeholder="Password"
               className="w-full border border-gray-400 p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[#1C1C3F]"
             />
           </div>
 
-          {/* Remember & Forgot */}
           <div className="flex items-center justify-between text-sm text-gray-600">
             <label className="flex items-center gap-2">
               <input type="checkbox" className="accent-[#1C1C3F]" />
               Remember Me
             </label>
-            <a href="#" className="hover:underline">
-              Forgot password?
-            </a>
+            <a href="#" className="hover:underline">Forgot password?</a>
           </div>
 
-          {/* Login Button */}
-          <button 
+          <button
             onClick={handleLogin}
-            className="w-full bg-[#222359] text-white py-2 rounded-md text-lg hover:opacity-90 transition">
+            className="w-full bg-[#222359] text-white py-2 rounded-md text-lg hover:opacity-90 transition"
+          >
             Login
           </button>
 
-          {/* Sign Up Link */}
           <p className="text-sm text-center">
-            Don&apos;t have an account?{" "}
+            Don&apos;t have an account?{' '}
             <a href="/signup" className="font-semibold text-[#1C1C3F] hover:underline">
               Sign up
             </a>

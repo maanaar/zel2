@@ -1,7 +1,10 @@
 import React from 'react';
 import zel from '../../src/assets/logo.png';
 import bg from '../../src/assets/bg.jpeg';
+import { ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 const PaymentForm = () => {
+  const navigate = useNavigate();
   return (
  <div
       className="min-h-screen flex  items-center justify-center"
@@ -19,6 +22,9 @@ const PaymentForm = () => {
     <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-4xl flex flex-col gap-8">
         {/* Billing Address */}
       <div className='flex flex-row space-x-8'>
+        <button type="button" className='text-purple-500 mx-auto' onClick={() => navigate('/')}>
+          <ArrowLeft className="mr-2" /> Back to Home
+        </button>
         <div className="w-1/2 space-y-4">
           <h2 className="text-2xl font-semibold text-[#89375F]">Checkout</h2>
           <h3 className="text-lg font-medium text-gray-700">Billing address</h3>
